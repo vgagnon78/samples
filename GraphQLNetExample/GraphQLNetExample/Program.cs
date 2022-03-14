@@ -18,6 +18,18 @@ builder.Services.AddGraphQL( options =>
     options.EnableMetrics = true;
 })
                 .AddSystemTextJson();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins("*")
+                   .AllowAnyHeader();
+        });
+});
+
+
 // default setup
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>
@@ -44,6 +56,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 
